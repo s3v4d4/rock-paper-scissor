@@ -31,21 +31,29 @@ function playRound(playerSelection,computerSelection) {
 }
 
 function game() {
-    let score = 0;
+    let playerScore = 0;
+    let computerScore = 0;
     let result,temp; 
-    for(let i=0;i<5;i++){
-        let input = prompt("Please enter your choice");
-        [result,temp] = playRound(input,getComputerChoice());
-        console.log(result)
-        score += temp
-    }
-    if (score > 0){
-        console.log('You are the winner!');
-    } else if (score < 0) {
-        console.log("You are the loser");
-    } else {
-        console.log("It's a tie");
-    }  
+
+    const textDisplay = document.querySelector('div p');
+    const comScore = document.querySelector('.computer h1');
+    const playScore = document.querySelector('.player h1');
+    const images = document.querySelectorAll('.player .images img');
+    console.log(comScore);
+    console.log(playScore);
+    images.forEach((image) => {
+        image.addEventListener('click', (e) => {
+            image.addClass('transition');
+            [result,temp] = playRound(image.alt,getComputerChoice());
+            if (temp > 0) {
+                playerScore += 1;
+            } else if (temp < 0){
+                computerScore += 1; 
+            }
+            comScore.textContent = `Computer score: ${computerScore}`;
+            playScore.textContent = `Player score : ${playerScore}`;
+        });
+    });
 }
 
 game()
