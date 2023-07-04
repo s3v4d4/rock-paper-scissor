@@ -34,17 +34,23 @@ function game() {
     let playerScore = 0;
     let computerScore = 0;
     let result,temp; 
+    let computerChoice;
 
     const textDisplay = document.querySelector('div p');
     const comScore = document.querySelector('.computer h1');
     const playScore = document.querySelector('.player h1');
     const images = document.querySelectorAll('.player .images img');
-    console.log(comScore);
-    console.log(playScore);
+    const opponentChoices = document.querySelectorAll('.computer .images img');
+    
     images.forEach((image) => {
         image.addEventListener('click', (e) => {
-            image.addClass('transition');
-            [result,temp] = playRound(image.alt,getComputerChoice());
+            computerChoice = getComputerChoice();
+            // Turns the border of the choice yellow to display what the player and computer have chosen
+            image.classList.add('transition');
+            opponent = document.querySelector(`.computer .images .${computerChoice}`);
+            opponent.classList.add('transition');
+
+            [result,temp] = playRound(image.alt,computerChoice);
             if (temp > 0) {
                 playerScore += 1;
             } else if (temp < 0){
@@ -53,7 +59,15 @@ function game() {
             comScore.textContent = `Computer score: ${computerScore}`;
             playScore.textContent = `Player score : ${playerScore}`;
         });
+        image.addEventListener('transitionend',(e) => {
+            if (e.propertyName !== 'border-left-color') return; 
+            image.classList.remove('transition');
+            opponentChoices.forEach((o) => {
+                o.classList.remove('transition');
+            });
+        });
     });
+
 }
 
 game()

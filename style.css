@@ -11,12 +11,16 @@ body {
 img {
     width : 150px;
     height : 150px;
-    border: solid 4px;
+    border: solid 8px;
     padding: 5px;
     background-color: white;
     border-radius: 20px;
     margin: 20px;
-    transition: border-color 2s;
+    transition: border-color 0.5s;
+}
+
+img.transition{
+    border-color: yellow;
 }
 
 .images {
